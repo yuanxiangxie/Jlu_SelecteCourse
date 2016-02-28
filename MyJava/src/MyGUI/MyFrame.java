@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 interface Parameter
@@ -48,7 +49,8 @@ interface Parameter
 public class MyFrame implements Parameter
 {
 	private JFrame loginFrame, selectedFrame;
-	private JTextField Name_TextField, Passwd_TextField;
+	private JTextField Name_TextField;
+	private JPasswordField Passwd_TextField;
 	private JTextField[] CourseID_TextField;
 	
 	public MyFrame()
@@ -76,7 +78,7 @@ public class MyFrame implements Parameter
 	{
 		JPanel loginPanel_Center = new JPanel();
 		Name_TextField = new JTextField(LoginFrame_TextField_Length);
-		Passwd_TextField = new JTextField(LoginFrame_TextField_Length);
+		Passwd_TextField = new JPasswordField(LoginFrame_TextField_Length);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
