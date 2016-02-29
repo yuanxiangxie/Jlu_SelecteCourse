@@ -10,6 +10,8 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -115,8 +117,8 @@ public class MyFrame implements Parameter
 	private void build_loginFrame_Bottom()
 	{
 		JPanel loginPanel_Bottom = new JPanel();
-		JButton loginButton = new JButton("Login");
-		JButton cancelButton = new JButton("Cancel");
+		final JButton loginButton = new JButton("Login");
+		final JButton cancelButton = new JButton("Cancel");
 	
 		loginButton.setBackground( new Color(244, 244, 244));
 		cancelButton.setBackground( new Color(244, 244, 244));
@@ -168,7 +170,7 @@ public class MyFrame implements Parameter
 	private void build_SelectedFrame_Top()
 	{
 		JPanel selectedPanel_Top = new JPanel(new BorderLayout());
-		JButton backButton = new JButton("Back");
+		final JButton backButton = new JButton("Back");
 		backButton.setBackground( new Color(244, 244, 244));
 		backButton.addActionListener( new AbstractAction()
 		{
@@ -244,7 +246,7 @@ public class MyFrame implements Parameter
 	private void build_SelectedFrame_Bottom()
 	{
 		JPanel selectedPanel_Bottom = new JPanel();
-		JButton startButton = new JButton("Start");
+		final JButton startButton = new JButton("Start");
 		startButton.setBackground( new Color(244, 244, 244));
 		startButton.addActionListener( new AbstractAction()
 		{
