@@ -1,5 +1,7 @@
 package MyGUI;
 
+import MyUIMS.UIMS;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -15,11 +17,70 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+
+class DialogMessage
+{
+	private JFrame Frame;
+	private JDialog Dialog;
+	private String Message;
+	final int Dialog_Width = Toolkit.getDefaultToolkit().getScreenSize().width / 4;
+	final int Dialog_Height = Toolkit.getDefaultToolkit().getScreenSize().height / 7;
+	
+	public DialogMessage(JFrame Frame, String Message, boolean Model)
+	{
+		this.Frame = Frame;
+		this.Message = Message;
+		Dialog = new JDialog(Frame, "Warning", Model);
+	}
+	
+	private void buildDialog_Center()
+	{
+		
+		JPanel Panel = new JPanel();
+		JLabel Label = new JLabel(Message, JLabel.CENTER);
+		Panel.add(Label);
+		JLabel Blank = new JLabel(" ");
+		Dialog.add(Blank, BorderLayout.NORTH);
+		Dialog.add(Panel);
+	}
+	
+	private void buildDialog_Bottom()
+	{
+		JPanel Panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JButton Button = new JButton("OK");
+		Button.setBackground( new Color(244, 244, 244));
+		Button.addActionListener( new AbstractAction()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Dialog.dispose();
+			}
+		});
+		
+		Panel.add(Button);
+		Dialog.add(Panel, BorderLayout.SOUTH);
+	}
+	
+	public void showDialog()
+	{
+		buildDialog_Center();
+		buildDialog_Bottom();
+		Dialog.setSize(Dialog_Width, Dialog_Height);
+		Dialog.setLocationRelativeTo(Frame);
+		Dialog.setResizable(false);
+		Dialog.setVisible(true);
+		Dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	}
+}
+
 
 interface Parameter
 {
@@ -54,6 +115,8 @@ public class MyFrame implements Parameter
 	private JTextField Name_TextField;
 	private JPasswordField Passwd_TextField;
 	private JTextField[] CourseID_TextField;
+	
+	private UIMS Uims;
 	
 	public MyFrame()
 	{
@@ -127,8 +190,19 @@ public class MyFrame implements Parameter
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				set_Show_LoginFrame(false);
-				show_SelectedFrame();
+				Uims = new UIMS(get_loginName(), get_loginPasswd());
+				if(Uims.loginUims())
+				{
+					set_Show_LoginFrame(false);
+					show_SelectedFrame();
+				}
+				else
+				{
+					// This I do not using JOptionPane is that I don't like the color of it's button
+					//JOptionPane.showMessageDialog(loginFrame, "Your UserName or Password is Wrong!");
+					DialogMessage Dialog = new DialogMessage(loginFrame, "Your UserName or Password is Wrong!", true);
+					Dialog.showDialog();
+				}
 			}
 		});
 		cancelButton.addActionListener( new AbstractAction()
