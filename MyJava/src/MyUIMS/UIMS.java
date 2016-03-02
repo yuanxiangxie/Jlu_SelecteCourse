@@ -25,6 +25,10 @@ public class UIMS implements Parameter
 	private String Param;
 	private String Cookies;
 	
+	public UIMS()
+	{
+		M = new MD5();
+	}
 	public UIMS(String UserName, String Password)
 	{
 		M = new MD5();
@@ -32,7 +36,12 @@ public class UIMS implements Parameter
 		this.Password =	M.md5("UIMS" + UserName + Password); 
 	}
 	
-	private boolean loginUims()
+	public void setInfo(String UserName, String Password)
+	{
+		this.UserName = UserName;
+		this.Password = M.md5("UIMS" + UserName + Password);
+	}
+	public boolean loginUims()
 	{
 		boolean isLogin = false;
 		Param = "j_username=" + UserName + "&j_password=" + Password;
